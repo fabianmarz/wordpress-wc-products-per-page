@@ -49,7 +49,7 @@ class Plugin {
   /**
    * Displays plugin view.
    */
-  function renderDropdown() {
+  public static function renderDropdown() {
     $vars = [
       'product_count' => self::getProductCount(),
       'limit' => get_option('wc_products_per_page')

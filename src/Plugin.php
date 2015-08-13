@@ -28,7 +28,7 @@ class Plugin {
    * @implements init
    */
   public static function init() {
-    add_action('plugins_loaded', __CLASS__ . '::loadTextdomain');
+    static::loadTextdomain();
     add_action('wp_head', __CLASS__ . '::loadAssets');
     add_filter('loop_shop_per_page', __CLASS__ . '::getProductCount', 20);
     add_filter('woocommerce_before_shop_loop', __CLASS__ . '::renderDropdown', 20);
@@ -64,14 +64,14 @@ class Plugin {
    * Loads the plugin textdomain.
    */
   public static function loadTextdomain() {
-    load_plugin_textdomain('wc_products', FALSE, self::getBasePath() . '/languages');
+    load_plugin_textdomain(self::L10N, FALSE, self::L10N . '/languages/');
   }
 
   /**
    * Adds the plugin stylesheet.
    */
   public static function loadAssets() {
-    wp_enqueue_style('wc-products-style', self::getBaseUrl() . '/wc-products-style.css');
+    wp_enqueue_style('wc-products-per-page', self::getBaseUrl() . '/wc-products-style.css');
   }
 
   /**
@@ -81,7 +81,7 @@ class Plugin {
    */
   public static function getBaseUrl() {
     if (!isset(self::$baseUrl)) {
-      self::$baseUrl = plugins_url('', dirname(__DIR__) . '/wc-products-per-page.php');
+      self::$baseUrl = plugins_url('', self::getBasePath() . '/wc-products-per-page.php');
     }
     return self::$baseUrl;
   }

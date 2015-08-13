@@ -23,7 +23,7 @@ if (!defined('ABSPATH')) {
  */
 function classloader($class) {
   static $ns_offset;
-  if (strpos($class, __NAMESPACE__) === 0) {
+  if (strpos($class, __NAMESPACE__ . '\\') === 0) {
     if ($ns_offset === NULL) {
       $ns_offset = strlen(__NAMESPACE__) + 1;
     }

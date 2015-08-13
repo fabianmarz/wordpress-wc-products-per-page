@@ -5,15 +5,19 @@
  * Contains \Netzstrategen\WooCommerce\ProductsPerPage\Schema.
  */
 
-Namespace Netzstrategen\WooCommerce\ProductsPerPage;
+namespace Netzstrategen\WooCommerce\ProductsPerPage;
 
+/**
+ * Generic plugin lifetime and maintenance functionality.
+ */
 class Schema {
-
 
   /**
    * register_activation_hook() callback.
    */
   public static function activate() {
+    // Use WordPress's (blog) posts per page setting as initial default value
+    // (like WooCommerce does).
     add_option('wc_products_per_page', get_option('posts_per_page'));
   }
 

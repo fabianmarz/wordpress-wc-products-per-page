@@ -5,22 +5,25 @@
  * Contains \Netzstrategen\WooCommerce\ProductsPerPage\Admin.
  */
 
-Namespace Netzstrategen\WooCommerce\ProductsPerPage;
+namespace Netzstrategen\WooCommerce\ProductsPerPage;
 
+/**
+ * Administrative back-end functionality.
+ */
 class Admin {
 
   /**
-   * @implements init
+   * @implements admin_init
    */
   public static function init() {
-    add_filter('woocommerce_get_settings_products', [__CLASS__, 'registerProductSettings'], 10, 2);
+    add_filter('woocommerce_get_settings_products', __CLASS__ . '::registerProductSettings', 10, 2);
   }
 
   /**
-   * Adds settings to the product display section.
+   * Adds settings for this plugin to WooCommerce's product display settings section.
    */
-  public static function registerProductSettings($settings, $current_section) {
-    if ($current_section == 'display') {
+  public static function registerProductSettings(array $settings, $current_section) {
+    if ($current_section === 'display') {
       $product_settings[] = [
         'name' => __('Products per page', Plugin::L10N),
         'id' => 'wc_products_per_page',

@@ -31,6 +31,7 @@ class Plugin {
     static::loadTextdomain();
     add_action('wp_head', __CLASS__ . '::loadAssets');
     add_filter('loop_shop_per_page', __CLASS__ . '::getProductCount', 20);
+    add_filter('post_limits', __CLASS__ . '::setSearchPostLimit');
     add_filter('woocommerce_before_shop_loop', __CLASS__ . '::renderDropdown', 20);
   }
 
@@ -47,6 +48,17 @@ class Plugin {
       $limit = (int) $_GET['product_count'];
     }
     return $limit;
+  }
+
+  /**
+   * Making the post limit for the search results equal the shop loop count.
+   */
+  public static function setSearchPostLimit($limits) {
+    if (is_search()) {
+      global $wp_query;
+      $wp_query->query_vars['posts_per_page'] = static::getProductCount();
+    }
+    return $limits;
   }
 
   /**
